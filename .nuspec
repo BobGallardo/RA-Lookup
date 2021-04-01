@@ -7,6 +7,6 @@
     <authors>bobbyG</authors>
     <owners>None</owners>
     <description>Cmdlets to pull data from RetroAchievements.org.</description>
-    <projectUrl>https://source-control-url.com/RA-tool</projectUrl>
+    <projectUrl>https://github.com/BusterBrawls/RA-Lookup</projectUrl>
   </metadata>
 </package>
