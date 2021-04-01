@@ -1,2 +1,1 @@
 Please run the following command to add your RetroAchievements API key
-Get-Credential -Message "Enter your RetroAchievements username and the API key for the password." | Export-Clixml -Path .\RAcreds.xml

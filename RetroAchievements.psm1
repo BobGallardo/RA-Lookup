@@ -2,10 +2,10 @@
 # API details at https://retroachievements.org/APIDemo.php
 # Authored by bobbyG
 
-$RAcredsCheck = ".\RAcreds.xml"
+$RAcredsCheck = ".\RA_creds.xml"
 If (-not(Test-Path -Path $RAcredsCheck -PathType Leaf)) {
     Set-Content -path .\RA_Error.txt -Value 'Please run the following command to add your RetroAchievements API key'
-    Add-Content -path .\RA_Error.txt -Value 'Get-Credential -Message "Enter your RetroAchievements username and the API key for the password." | Export-Clixml -Path .\RAcreds.xml'
+    Add-Content -path .\RA_Error.txt -Value 'Get-Credential -Message "Enter your RetroAchievements username and the API key for the password." | Export-Clixml -Path .\RA_creds.xml'
     break
 }
 else {
