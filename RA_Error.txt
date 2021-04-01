@@ -1,1 +1,0 @@
-Please run the following command to add your RetroAchievements API key
