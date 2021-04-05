@@ -1,4 +1,4 @@
-## Powershell function to display the top 10 players on RetroAchievements.org and to test my PS abilities, or lack there of.
+## This is a Powershell module with functions to collect data from RetroAchievements.org and to test my PS abilities, or lack there of.
 # API details at https://retroachievements.org/APIDemo.php
 # Authored by bobbyG
 
@@ -54,7 +54,6 @@ function Get-RAGameList {
     return $gameList
 }
 function Get-RAGameNfo {
-    # Get-RAGameNfo(game ID number from Get-RAGameList function)
     param (
         [Parameter(Mandatory)][int]$gameID
     )
@@ -70,7 +69,6 @@ function Get-RAGameNfo {
     return $gameNfo
 }
 function Get-RAGameExt {
-    # Get-RAGameExt(game ID number from Get-RAGameList function)
     param (
         [Parameter(Mandatory)][int]$gameID
     )
@@ -86,11 +84,8 @@ function Get-RAGameExt {
     return $gameExt
 }
 function Get-RAFeed {
-    # Get-RAFeed ()
     param (
-        [Parameter(Mandatory)][string]$user,
-        [int]$count = 0,
-        [int]$offset = 0
+        [Parameter(Mandatory)][string]$user
     )
     $action = 'API_GetFeed.php'
     $builder = New-Object System.UriBuilder
@@ -98,13 +93,27 @@ function Get-RAFeed {
     $builder.Host = 'retroachievements.org'
     $builder.Port = 443
     $builder.Path = ('API', "$action" -join '/')
-    $builder.Query = ("z=$apiUser", "y=$apiKey", "u=$user", "c=$count", "o=$offset" -join '&')
+    $builder.Query = ("z=$apiUser", "y=$apiKey", "u=$user" -join '&')
+    $uri = $builder.ToString()
+    $gameFeed = Invoke-RestMethod -Uri $uri
+    return $gameFeed
+}
+function Get-RACompleted {
+    param (
+        [Parameter(Mandatory)][string]$user
+    )
+    $action = 'API_GetUserCompletedGames.php'
+    $builder = New-Object System.UriBuilder
+    $builder.Scheme = 'https'
+    $builder.Host = 'retroachievements.org'
+    $builder.Port = 443
+    $builder.Path = ('API', "$action" -join '/')
+    $builder.Query = ("z=$apiUser", "y=$apiKey", "u=$user" -join '&')
     $uri = $builder.ToString()
     $gameFeed = Invoke-RestMethod -Uri $uri
     return $gameFeed
 }
 function Get-RAUserSummary {
-    # Get-RAUserSummary ()
     param (
         [Parameter(Mandatory)][string]$user,
         [int]$numRecentGames = 5
@@ -121,7 +130,6 @@ function Get-RAUserSummary {
     return $userSummary
 }
 function Get-RAUserRankAndScore {
-    # RAUserRankAndScore (username)
     param (
         [Parameter(Mandatory)][string]$user
     )
@@ -137,7 +145,6 @@ function Get-RAUserRankAndScore {
     return $userRankAndScore
 }
 function Get-RAUserProgress {
-    # Get-RAUserProgress (username, IDCSV)
     param (
         [Parameter(Mandatory)][string]$user,
         [Parameter(Mandatory)][int]$gameIDCSV
@@ -154,11 +161,8 @@ function Get-RAUserProgress {
     return $userProgress
 }
 function Get-RARecentGames {
-    # Get-RARecentGames ()
     param (
-        [Parameter(Mandatory)][string]$user,
-        [int]$count = 5,
-        [int]$offset = 0
+        [Parameter(Mandatory)][string]$user
     )
     $action = 'API_GetUserRecentlyPlayedGames.php'
     $builder = New-Object System.UriBuilder
@@ -172,7 +176,6 @@ function Get-RARecentGames {
     return $userRecent
 }
 function Get-RAGameUser {
-    # Get-RAUserSummary ()
     param (
         [Parameter(Mandatory)][string]$user,
         [Parameter(Mandatory)][int]$gameID
@@ -189,7 +192,6 @@ function Get-RAGameUser {
     return $userGameUser
 }
 function Get-RAEarnedOn {
-    # Get-RAEarnedOn ('username', 'date' ['2014-01-04'])
     param (
         [Parameter(Mandatory)][string]$user,
         [Parameter(Mandatory)][datetime]$dateInput
@@ -206,7 +208,6 @@ function Get-RAEarnedOn {
     return $earnedOn
 }
 function Get-RAEarnedBetween {
-    # Get-RAEarnedBetween ('username', dateFrom ['2013-12-31 20:00:00'], dateTo['2014-01-01 04:00:00'])
     param (
         [Parameter(Mandatory)][string]$user,
         [Parameter(Mandatory)][datetime]$dateFrom,

@@ -111,4 +111,767 @@
 		</command:examples>
 	</command:command>
 	<!-- Edited with: SAPIEN PowerShell HelpWriter 2021 v2.3.49-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RAGameNfo</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RAGameNfo</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Lists all info on a specific game. Get a list of game ID's with Get-GameList.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem default="true" parametersetname="gameID">
+				<!--NAME: gameID-->
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RAGameNfo</maml:name>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>gameID</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>gameID</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<maml:introduction>
+					<maml:para />
+				</maml:introduction>
+				<dev:code>C:\PS&gt; Get-RAGameNfo 13</dev:code>
+				<dev:remarks>
+					<maml:para>You can find the game ID's with Get-RA_GameList</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RAGameExt</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RAGameExt</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Collect extended game information. Game ID numbers can be found with Get-RAGameList</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem parametersetname="GameID" default="true">
+				<!--TAG: DEFAULT-->
+				<!--NAME: GameID-->
+				<maml:name>Get-RAGameExt</maml:name>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<maml:introduction>
+					<maml:para />
+				</maml:introduction>
+				<dev:code>C:\PS&gt; Get-RAGameExt 13</dev:code>
+				<dev:remarks>
+					<maml:para />
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RAUserSummary</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RAUserSummary</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Complete summary of  the specified user's progress in the last number specified of games.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem default="true">
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RAUserSummary</maml:name>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>User</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>GameCount</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>User</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>GameCount</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<maml:introduction>
+					<maml:para />
+				</maml:introduction>
+				<dev:code>C:\PS&gt; Get-RAUserSummary crazyautobot 1446</dev:code>
+				<dev:remarks>
+					<maml:para />
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RAUserRankAndScore</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RAUserRankAndScore</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Display the global rank and score of specified user.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem default="true">
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RAUserRankAndScore</maml:name>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>User</maml:name>
+					<maml:description>
+						<maml:para>A user name from RetroAchievements</maml:para>
+					</maml:description>
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>User</maml:name>
+				<maml:description>
+					<maml:para>A user name from RetroAchievements</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<maml:introduction>
+					<maml:para />
+				</maml:introduction>
+				<dev:code>C:\PS&gt; Get-RAUserRankAndScore crazyautobot</dev:code>
+				<dev:remarks>
+					<maml:para />
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RAUserProgress</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RAUserProgress</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Display a user's progress on specified game(s)</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem default="true">
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RAUserProgress</maml:name>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>User</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>GameID</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>User</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>GameID</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<maml:introduction>
+					<maml:para />
+				</maml:introduction>
+				<dev:code>C:\PS&gt; Get-RAUserProgress crazyautobot "1446, 1994"</dev:code>
+				<dev:remarks>
+					<maml:para />
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RARecentGames</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RARecentGames</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Display the most recently played games for specified user.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem default="true">
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RARecentGames</maml:name>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>UserID</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>UserID</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<maml:introduction>
+					<maml:para />
+				</maml:introduction>
+				<dev:code>C:\PS&gt; Get-RARecentGames crazyautobot</dev:code>
+				<dev:remarks>
+					<maml:para />
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RAGameUser</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RAGameUser</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Display a summary of the specified user and the specified number of the most recently played games.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem default="true">
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RAGameUser</maml:name>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>User</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>GameCount</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>User</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>GameCount</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<maml:introduction>
+					<maml:para />
+				</maml:introduction>
+				<dev:code>C:\PS&gt; Get-RAGameUser crazyautobot 3</dev:code>
+				<dev:remarks>
+					<maml:para />
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RAEarnedOn</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RAEarnedOn</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem default="true">
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RAEarnedOn</maml:name>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>User</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>Date</maml:name>
+					<maml:description>
+						<maml:para>Date is entered as:
+year-month-day</maml:para>
+					</maml:description>
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>User</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>Date</maml:name>
+				<maml:description>
+					<maml:para>Date is entered as:
+year-month-day</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<maml:introduction>
+					<maml:para>Get-RAEarnedOn username date</maml:para>
+				</maml:introduction>
+				<dev:code>C:\PS&gt; Get-RAEarnedOn crazyautobot 2021-03-24</dev:code>
+				<dev:remarks>
+					<maml:para>Date is entered as:
+year-month-day</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RAEarnedBetween</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RAEarnedBetween</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para />
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem default="true">
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RAEarnedBetween</maml:name>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>User</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>DateFrom</maml:name>
+					<maml:description>
+						<maml:para>Date is entered as:
+year-month-day</maml:para>
+					</maml:description>
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>DateTo</maml:name>
+					<maml:description>
+						<maml:para>Date is entered as:
+year-month-day</maml:para>
+					</maml:description>
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>User</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>DateFrom</maml:name>
+				<maml:description>
+					<maml:para>Date is entered as:
+year-month-day</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>DateTo</maml:name>
+				<maml:description>
+					<maml:para>Date is entered as:
+year-month-day</maml:para>
+				</maml:description>
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<maml:introduction>
+					<maml:para />
+				</maml:introduction>
+				<dev:code>C:\PS&gt; Get-RAEarnedBetween crazyautobot 2020-05-26 2021-04-05</dev:code>
+				<dev:remarks>
+					<maml:para>Date is entered as:
+year-month-day</maml:para>
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RAFeed</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RAFeed</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Get Games completed by the specified user.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem default="true">
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RAFeed</maml:name>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>User</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>User</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+			<command:parameter required="false" globbing="false" pipelineInput="false" variableLength="false" position="named">
+				<maml:name>Parameter2</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+		</command:parameters>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2021 v2.3.49-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RACompleted</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RACompleted</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Display a list of games completed by the specified user.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem default="true">
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RACompleted</maml:name>
+				<command:parameter required="true" globbing="false" pipelineInput="false" variableLength="false" position="named">
+					<maml:name>User</maml:name>
+					<maml:description />
+					<dev:type>
+						<maml:name />
+						<maml:uri />
+					</dev:type>
+					<dev:defaultValue />
+				</command:parameter>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:parameters>
+			<!-- All Parameters-->
+			<command:parameter required="true" globbing="false" pipelineInput="False" variableLength="false" position="named">
+				<maml:name>User</maml:name>
+				<maml:description />
+				<dev:type>
+					<maml:name />
+					<maml:uri />
+				</dev:type>
+				<dev:defaultValue />
+			</command:parameter>
+		</command:parameters>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<maml:introduction>
+					<maml:para />
+				</maml:introduction>
+				<dev:code>C:\PS&gt; Get-RACompleted crazyautobot</dev:code>
+				<dev:remarks>
+					<maml:para />
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2021 v2.3.49-->
 </helpItems>
