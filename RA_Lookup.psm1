@@ -14,16 +14,6 @@ else {
 }
 function Get-RATop10 {
     param ()
-    <#
- .SYNOPSIS
-  Captures achievement data from RetroAchievements.org.
-
- .DESCRIPTION
-  Captures the Top 10 players on RetroAchievements (Username, Points, True Ratio).
-
- .EXAMPLE
-  Get-RATop10
-#>
     $action = 'API_GetTopTenUsers.php'
     $builder = New-Object System.UriBuilder
     $builder.Scheme = 'https'
@@ -49,17 +39,6 @@ function Get-RAConID {
     return $consoleIDs
 }
 function Get-RAGameList {
-    <#
- .SYNOPSIS
-  Captures achievement data from RetroAchievements.org.
-
- .DESCRIPTION
-  Lists all the games on the console specified. Get the console ID with the Get-RAConID cmdlet.
-
- .EXAMPLE
-   Get-RAGameList $consoleID
-   Get-RAGameList 13
-#>
     param (
         [Parameter(Mandatory)][int]$consoleID
     )

@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<helpItems schema="maml" xmlns="http://msh">
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2021 v2.3.49-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!--Command-->
+		<command:details>
+			<command:name>Get-RATop10</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RATop10</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Captures the Top 10 players on RetroAchievements (Username, Points, True Ratio).</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!--Parameter Sets-->
+			<command:syntaxItem default="true">
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RATop10</maml:name>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<dev:code>C:\PS&gt; Get-RATop10</dev:code>
+				<dev:remarks>
+					<maml:para />
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2021 v2.3.49-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RAConID</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RAConID</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Display a list of game consoles and their ID numbers</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem>
+				<maml:name>Get-RAConID</maml:name>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<dev:code>C:\PS&gt; Get-RAConID</dev:code>
+				<dev:remarks>
+					<maml:para />
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2021 v2.3.49-->
+	<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+		<!-- Command-->
+		<command:details>
+			<command:name>Get-RAGameList</command:name>
+			<maml:description>
+				<maml:para>Captures achievement data from RetroAchievements.org.</maml:para>
+			</maml:description>
+			<maml:copyright>
+				<maml:para />
+			</maml:copyright>
+			<command:verb>Get</command:verb>
+			<command:noun>RAGameList</command:noun>
+			<dev:version />
+		</command:details>
+		<maml:description>
+			<maml:para>Lists all the games on the specified console. Get a list of console ID's with Get-RAConID.</maml:para>
+		</maml:description>
+		<command:syntax>
+			<!-- Parameter Sets-->
+			<command:syntaxItem default="true">
+				<!--TAG: DEFAULT-->
+				<maml:name>Get-RAGameList</maml:name>
+			</command:syntaxItem>
+		</command:syntax>
+		<command:examples>
+			<!-- Examples-->
+			<command:example>
+				<maml:title>EXAMPLE 1</maml:title>
+				<maml:introduction>
+					<maml:para />
+				</maml:introduction>
+				<dev:code>C:\PS&gt; Get-RAGameList 13</dev:code>
+				<dev:remarks>
+					<maml:para />
+				</dev:remarks>
+			</command:example>
+		</command:examples>
+	</command:command>
+	<!-- Edited with: SAPIEN PowerShell HelpWriter 2021 v2.3.49-->
+</helpItems>
