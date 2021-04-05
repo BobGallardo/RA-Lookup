@@ -9,9 +9,9 @@ Enter your RetroAchievements username and API key when you import the module. Yo
 <h2>
  Troubleshooting</h2>
  You may need to unblock the .ps1 and .psm1 files 
-<code>
+<br><code>
 Unblock-File RA_GetCreds.ps1
 </code>
-<code>
+<br><code>
 Unblock-File RA_Lookup.psm1
 </code>
