@@ -84,8 +84,11 @@ function Get-RAGameExt {
     return $gameExt
 }
 function Get-RAFeed {
+    # This function returns False
     param (
-        [Parameter(Mandatory)][string]$user
+        [Parameter(Mandatory)][string]$user,
+        [int]$count = 0,
+        [int]$offset = 0
     )
     $action = 'API_GetFeed.php'
     $builder = New-Object System.UriBuilder
@@ -93,7 +96,7 @@ function Get-RAFeed {
     $builder.Host = 'retroachievements.org'
     $builder.Port = 443
     $builder.Path = ('API', "$action" -join '/')
-    $builder.Query = ("z=$apiUser", "y=$apiKey", "u=$user" -join '&')
+    $builder.Query = ("z=$apiUser", "y=$apiKey", "u=$userc=$count", "o=$offset" -join '&')
     $uri = $builder.ToString()
     $gameFeed = Invoke-RestMethod -Uri $uri
     return $gameFeed
@@ -161,6 +164,7 @@ function Get-RAUserProgress {
     return $userProgress
 }
 function Get-RARecentGames {
+    # This function returns no results 
     param (
         [Parameter(Mandatory)][string]$user
     )
@@ -176,6 +180,7 @@ function Get-RARecentGames {
     return $userRecent
 }
 function Get-RAGameUser {
+    # This function returns no results 
     param (
         [Parameter(Mandatory)][string]$user,
         [Parameter(Mandatory)][int]$gameID
@@ -192,6 +197,7 @@ function Get-RAGameUser {
     return $userGameUser
 }
 function Get-RAEarnedOn {
+    # This function returns no results 
     param (
         [Parameter(Mandatory)][string]$user,
         [Parameter(Mandatory)][datetime]$dateInput
@@ -208,6 +214,7 @@ function Get-RAEarnedOn {
     return $earnedOn
 }
 function Get-RAEarnedBetween {
+    # This function returns 404 Not Found
     param (
         [Parameter(Mandatory)][string]$user,
         [Parameter(Mandatory)][datetime]$dateFrom,
