@@ -148,6 +148,7 @@ function Get-RAUserRankAndScore {
     return $userRankAndScore
 }
 function Get-RAUserProgress {
+    #   This function is not properly setting $gameIDCSV (comma seperated list of games) 
     param (
         [Parameter(Mandatory)][string]$user,
         [Parameter(Mandatory)][int]$gameIDCSV
