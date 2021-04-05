@@ -9,7 +9,7 @@
 @{
 
   # Script module or binary module file associated with this manifest.
-  RootModule        = 'RetroAchievements'
+  RootModule        = 'RA_Lookup'
   
   # Version number of this module.
   ModuleVersion     = '0.5.2'
@@ -66,7 +66,7 @@
   # FormatsToProcess = @()
   
   # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-  NestedModules     = @('.\RetroAchievements.psm1')
+  NestedModules     = @('.\RA_Lookup.psm1')
   
   # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
   FunctionsToExport = @('Get-RATop10', 'Get-RAConID', 'Get-RAGameList', 'Get-RAGameNfo', 'Get-RAGameExt', 'Get-RAFeed', 'Get-RAUserSummary', 'Get-RAUserRankAndScore', 'Get-RAUserProgress', 'Get-RARecentGames', 'Get-RAGameUser', 'Get-RAEarnedOn', 'Get-RAEarnedBetween')
@@ -84,7 +84,7 @@
   # DscResourcesToExport = @()
   
   # List of all modules packaged with this module
-  ModuleList        = @('RetroAchievements')
+  ModuleList        = @('RA_Lookup')
   
   # List of all files packaged with this module
   # FileList = @()
