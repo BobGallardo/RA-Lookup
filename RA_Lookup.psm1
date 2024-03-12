@@ -1,5 +1,16 @@
 # RetroAchievementsAPI.psm1
 
+<#
+.SYNOPSIS
+Prompts the user to enter their RetroAchievements credentials and saves them in memory.
+
+.DESCRIPTION
+This function prompts the user for their RetroAchievements username and API key. 
+The credentials are saved in the global scope for the current PowerShell session.
+
+.EXAMPLE
+Set-RACredentialsInMemory
+#>
 function Set-RACredentialsInMemory {
     <#
     .SYNOPSIS
@@ -16,6 +27,16 @@ function Set-RACredentialsInMemory {
     $Global:RACredentials = Get-Credential -Message "Enter your RetroAchievements username and the API key for the password."
 }
 
+<#
+.SYNOPSIS
+Retrieves the stored RetroAchievements credentials from memory.
+
+.DESCRIPTION
+This function retrieves the username and API key for RetroAchievements stored in memory.
+
+.EXAMPLE
+$creds = Get-RACredentialsFromMemory
+#>
 function Get-RACredentialsFromMemory {
     <#
     .SYNOPSIS
@@ -47,6 +68,23 @@ function Get-RACredentialsFromMemory {
     return @{ UserName = $username; ApiKey = $apiKey }
 }
 
+<#
+.SYNOPSIS
+Invokes a REST method with RetroAchievements credentials.
+
+.DESCRIPTION
+This function merges the stored RetroAchievements credentials with caller's query parameters 
+and invokes a REST method to make an API call.
+
+.PARAMETER Action
+The API action to perform.
+
+.PARAMETER QueryParameters
+A hashtable of query parameters for the request.
+
+.EXAMPLE
+$response = Invoke-RARestMethod -Action 'API_Action.php' -QueryParameters @{ param1 = 'value1'; param2 = 'value2' }
+#>
 function Invoke-RARestMethod {
     [CmdletBinding()]
     param (
@@ -79,7 +117,23 @@ function Invoke-RARestMethod {
     }
 }
 
-    function Build-RAUri {
+<#
+.SYNOPSIS
+Helper function to build API request URIs.
+
+.DESCRIPTION
+This function constructs a URI for API requests based on the specified action and query parameters.
+
+.PARAMETER Action
+The API action to perform.
+
+.PARAMETER QueryParameters
+A hashtable of query parameters for the request.
+
+.EXAMPLE
+$uri = Build-RAUri -Action 'API_GetTopTenUsers.php' -QueryParameters @{ z = 'UserName'; y = 'APIKey' }
+#>
+function Build-RAUri {
     <#
     .SYNOPSIS
     Helper function to build API request URIs.
@@ -97,22 +151,23 @@ function Invoke-RARestMethod {
     $uri = Build-RAUri -Action 'API_GetTopTenUsers.php' -QueryParameters @{ z = 'UserName'; y = 'APIKey' }
     
     #>
-        param (
-            [string]$Action,
-            [hashtable]$QueryParameters
-        )
+    param (
+        [string]$Action,
+        [hashtable]$QueryParameters
+    )
     
-        $builder = New-Object System.UriBuilder
-        $builder.Scheme = 'https'
-        $builder.Host = 'retroachievements.org'
-        $builder.Port = 443
-        $builder.Path = "API/$Action"
+    $builder = New-Object System.UriBuilder
+    $builder.Scheme = 'https'
+    $builder.Host = 'retroachievements.org'
+    $builder.Port = 443
+    $builder.Path = "API/$Action"
     
-        $query = $QueryParameters.GetEnumerator() | ForEach-Object { "$($_.Key)=$($_.Value)" } -join '&'
-        $builder.Query = $query
+    $query = $QueryParameters.GetEnumerator() | ForEach-Object { "$($_.Key)=$($_.Value)" } -join '&'
+    $builder.Query = $query
     
-        return $builder.Uri.AbsoluteUri
-    }
+    return $builder.Uri.AbsoluteUri
+}
+
     
 <#
 .SYNOPSIS
@@ -761,6 +816,59 @@ function Get-RAEarnedBetween {
         u = $user
         f = $formattedDateFrom
         t = $formattedDateTo
+    }
+
+    return $response
+}
+
+<#
+.SYNOPSIS
+Retrieves achievement unlocks for a specified user and game from RetroAchievements.
+
+.DESCRIPTION
+This function retrieves achievement unlocks for a specified user and game from the RetroAchievements API.
+
+.PARAMETER user
+The username of the RetroAchievements user whose achievement unlocks are being requested.
+
+.PARAMETER gameID
+The ID of the game for which achievement unlocks are requested.
+
+.EXAMPLE
+Get-RAAchievementUnlocks -user 'PlayerName' -gameID 1234
+
+Retrieves the achievement unlocks for 'PlayerName' for the game with ID 1234.
+
+.NOTES
+Will prompt for credentials if not found in memory.
+#>
+function Get-RAAchievementUnlocks {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [string]$user,
+
+        [Parameter(Mandatory)]
+        [int]$gameID
+    )
+
+    # Check for credentials in memory; if not found, prompt the user to enter them
+    $creds = Get-RACredentialsFromMemory
+    if ($null -eq $creds) {
+        Write-Host "Credentials not found in memory."
+        Set-RACredentialsInMemory
+        $creds = Get-RACredentialsFromMemory
+        if ($null -eq $creds) {
+            Write-Error "Unable to retrieve credentials. Operation cancelled."
+            return
+        }
+    }
+
+    # API action and URI construction
+    $action = 'API_GetAchievementUnlocks.php'
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
+        u = $user
+        g = $gameID
     }
 
     return $response
