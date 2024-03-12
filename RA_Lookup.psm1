@@ -1,15 +1,3 @@
-<#
-.SYNOPSIS
-This PowerShell module is designed to interact with the RetroAchievements.org API.
-
-.DESCRIPTION
-The module includes functions to retrieve various data from RetroAchievements.org, such as top users, game lists, user summaries, and more. It requires an API user name and key, which should be stored securely.
-
-.NOTES
-Author: bobbyG
-API Details: https://retroachievements.org/APIDemo.php
-#>
-
 # RetroAchievementsAPI.psm1
 
 function Set-RACredentialsInMemory {
@@ -131,7 +119,12 @@ function Invoke-RARestMethod {
 Retrieves a list of console IDs from RetroAchievements.
 
 .DESCRIPTION
-This function makes a call to the RetroAchievements API to fetch a list of all available console IDs along with their names. This is useful for identifying consoles in other API calls.
+This function retrieves a list of console IDs from the RetroAchievements API along with their names. Console IDs are useful for identifying consoles in other API calls.
+
+If RetroAchievements credentials are not found in memory, the function prompts the user to enter their credentials using Set-RACredentialsInMemory.
+
+.PARAMETER None
+This function does not accept any parameters.
 
 .EXAMPLE
 Get-RAConID
@@ -145,177 +138,269 @@ function Get-RAConID {
     [CmdletBinding()]
     param ()
 
+    $creds = Get-RACredentialsFromMemory
+    if ($null -eq $creds) {
+        Write-Host "RetroAchievements credentials not found. Please enter your credentials."
+        Set-RACredentialsInMemory
+        $creds = Get-RACredentialsFromMemory
+    }
+
+    if ($null -eq $creds) {
+        Write-Error "Credentials not found. Exiting."
+        return
+    }
+
     $action = 'API_GetConsoleIDs.php'
     $response = Invoke-RARestMethod -Action $action -QueryParameters @{}
 
     return $response
 }
 
-    
-    function Get-RAGameList {
-        [CmdletBinding()]
-        param (
-            [Parameter(Mandatory)]
-            [int]$consoleID
-        )
-    
-        # Retrieve credentials from memory
+<#
+.SYNOPSIS
+Retrieves a list of games for a specified console from RetroAchievements.
+
+.DESCRIPTION
+This function retrieves a list of games for a specified console from the RetroAchievements API. The console is identified by its console ID.
+
+If RetroAchievements credentials are not found in memory, the function prompts the user to enter their credentials using Set-RACredentialsInMemory.
+
+.PARAMETER consoleID
+The ID of the console for which to retrieve the game list.
+
+.EXAMPLE
+Get-RAGameList -consoleID 5
+
+Retrieves the list of games for the console with ID 5.
+
+.NOTES
+Requires that the RetroAchievements credentials are already set in the current session using Set-RACredentialsInMemory.
+#>
+function Get-RAGameList {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [int]$consoleID
+    )
+
+    $creds = Get-RACredentialsFromMemory
+    if ($null -eq $creds) {
+        Write-Host "RetroAchievements credentials not found. Please enter your credentials."
+        Set-RACredentialsInMemory
         $creds = Get-RACredentialsFromMemory
-        if ($null -eq $creds) {
-            Write-Error "Credentials not found in memory. Please run Set-RACredentialsInMemory."
-            return
-        }
-    
-        # API action and URI construction
-        $action = 'API_GetGameList.php'
-        $uri = Build-RAUri -Action $action -QueryParameters @{
-            z = $creds['UserName']
-            y = $creds['ApiKey']
-            i = $consoleID
-        }
-    
-        try {
-            # Make the API request
-            $gameList = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-            return $gameList
-        }
-        catch {
-            Write-Error "Failed to retrieve game list for console ID $consoleID: $_"
-        }
     }
+
+    if ($null -eq $creds) {
+        Write-Error "Credentials not found. Exiting."
+        return
+    }
+
+    $action = 'API_GetGameList.php'
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
+        i = $consoleID
+    }
+
+    return $response
+}
     
-    function Get-RAGameNfo {
-        [CmdletBinding()]
-        param (
-            [Parameter(Mandatory)]
-            [int]$gameID
-        )
-    
-        # Retrieve credentials from memory
+<#
+.SYNOPSIS
+Retrieves information for a specified game from RetroAchievements.
+
+.DESCRIPTION
+This function retrieves information for a specified game from the RetroAchievements API. The game is identified by its game ID.
+
+If RetroAchievements credentials are not found in memory, the function prompts the user to enter their credentials using Set-RACredentialsInMemory.
+
+.PARAMETER gameID
+The ID of the game for which to retrieve information.
+
+.EXAMPLE
+Get-RAGameNfo -gameID 12345
+
+Retrieves information for the game with ID 12345.
+
+.NOTES
+Requires that the RetroAchievements credentials are already set in the current session using Set-RACredentialsInMemory.
+#>
+function Get-RAGameNfo {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [int]$gameID
+    )
+
+    $creds = Get-RACredentialsFromMemory
+    if ($null -eq $creds) {
+        Write-Host "RetroAchievements credentials not found. Please enter your credentials."
+        Set-RACredentialsInMemory
         $creds = Get-RACredentialsFromMemory
-        if ($null -eq $creds) {
-            Write-Error "Credentials not found in memory. Please run Set-RACredentialsInMemory."
-            return
-        }
-    
-        # API action and URI construction
-        $action = 'API_GetGame.php'
-        $uri = Build-RAUri -Action $action -QueryParameters @{
-            z = $creds['UserName']
-            y = $creds['ApiKey']
-            i = $gameID
-        }
-    
-        try {
-            # Make the API request
-            $gameNfo = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-            return $gameNfo
-        }
-        catch {
-            Write-Error "Failed to retrieve game information for Game ID $gameID: $_"
-        }
     }
-    
-    function Get-RAGameExt {
-        [CmdletBinding()]
-        param (
-            [Parameter(Mandatory)]
-            [int]$gameID
-        )
-    
-        # Retrieve credentials from memory
+
+    if ($null -eq $creds) {
+        Write-Error "Credentials not found. Exiting."
+        return
+    }
+
+    $action = 'API_GetGame.php'
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
+        i = $gameID
+    }
+
+    return $response
+}
+
+<#
+.SYNOPSIS
+Retrieves extended information for a specified game from RetroAchievements.
+
+.DESCRIPTION
+This function retrieves extended information for a specified game from the RetroAchievements API. The game is identified by its game ID.
+
+If RetroAchievements credentials are not found in memory, the function prompts the user to enter their credentials using Set-RACredentialsInMemory.
+
+.PARAMETER gameID
+The ID of the game for which to retrieve extended information.
+
+.EXAMPLE
+Get-RAGameExt -gameID 12345
+
+Retrieves extended information for the game with ID 12345.
+
+.NOTES
+Requires that the RetroAchievements credentials are already set in the current session using Set-RACredentialsInMemory.
+#>
+function Get-RAGameExt {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [int]$gameID
+    )
+
+    $creds = Get-RACredentialsFromMemory
+    if ($null -eq $creds) {
+        Write-Host "RetroAchievements credentials not found. Please enter your credentials."
+        Set-RACredentialsInMemory
         $creds = Get-RACredentialsFromMemory
-        if ($null -eq $creds) {
-            Write-Error "Credentials not found in memory. Please run Set-RACredentialsInMemory."
-            return
-        }
-    
-        # API action and URI construction
-        $action = 'API_GetGameExtended.php'
-        $uri = Build-RAUri -Action $action -QueryParameters @{
-            z = $creds['UserName']
-            y = $creds['ApiKey']
-            i = $gameID
-        }
-    
-        try {
-            # Make the API request
-            $gameExt = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-            return $gameExt
-        }
-        catch {
-            Write-Error "Failed to retrieve extended game information for game ID $gameID: $_"
-        }
     }
+
+    if ($null -eq $creds) {
+        Write-Error "Credentials not found. Exiting."
+        return
+    }
+
+    $action = 'API_GetGameExtended.php'
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
+        i = $gameID
+    }
+
+    return $response
+}
     
-    function Get-RAFeed {
-        [CmdletBinding()]
-        param (
-            [Parameter(Mandatory)]
-            [string]$user,
-    
-            [int]$count = 0,
-            [int]$offset = 0
-        )
-    
-        # Retrieve credentials from memory
+<#
+.SYNOPSIS
+Retrieves the feed for a specified user from RetroAchievements.
+
+.DESCRIPTION
+This function retrieves the feed for a specified user from the RetroAchievements API.
+
+If RetroAchievements credentials are not found in memory, the function prompts the user to enter their credentials using Set-RACredentialsInMemory.
+
+.PARAMETER user
+The username for which to retrieve the feed.
+
+.PARAMETER count
+The number of items to retrieve from the feed. Default is 0, which retrieves all items.
+
+.PARAMETER offset
+The offset for paging through the feed. Default is 0.
+
+.EXAMPLE
+Get-RAFeed -user "exampleuser" -count 10 -offset 0
+
+Retrieves the feed for the user "exampleuser", retrieving 10 items starting from the first item.
+
+.NOTES
+Requires that the RetroAchievements credentials are already set in the current session using Set-RACredentialsInMemory.
+#>
+function Get-RAFeed {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [string]$user,
+
+        [int]$count = 0,
+        [int]$offset = 0
+    )
+
+    $creds = Get-RACredentialsFromMemory
+    if ($null -eq $creds) {
+        Write-Host "RetroAchievements credentials not found. Please enter your credentials."
+        Set-RACredentialsInMemory
         $creds = Get-RACredentialsFromMemory
-        if ($null -eq $creds) {
-            Write-Error "Credentials not found in memory. Please run Set-RACredentialsInMemory."
-            return
-        }
-    
-        # Correcting the parameter concatenation in the URI
-        $action = 'API_GetFeed.php'
-        $uri = Build-RAUri -Action $action -QueryParameters @{
-            z = $creds['UserName']
-            y = $creds['ApiKey']
-            u = $user
-            c = $count
-            o = $offset
-        }
-    
-        try {
-            # Make the API request
-            $gameFeed = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-            return $gameFeed
-        }
-        catch {
-            Write-Error "Failed to retrieve feed for user '$user': $_"
-        }
     }
-    
-    function Get-RACompleted {
-        [CmdletBinding()]
-        param (
-            [Parameter(Mandatory)]
-            [string]$user
-        )
-    
-        # Retrieve credentials from memory
+
+    if ($null -eq $creds) {
+        Write-Error "Credentials not found. Exiting."
+        return
+    }
+
+    $action = 'API_GetFeed.php'
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
+        u = $user
+        c = $count
+        o = $offset
+    }
+
+    return $response
+}
+
+<#
+.SYNOPSIS
+Retrieves completed games for a specified user from RetroAchievements.
+
+.DESCRIPTION
+This function retrieves completed games for a specified user from the RetroAchievements API.
+
+If RetroAchievements credentials are not found in memory, the function prompts the user to enter their credentials using Set-RACredentialsInMemory.
+
+.PARAMETER user
+The username for which to retrieve completed games.
+
+.EXAMPLE
+Get-RACompleted -user "exampleuser"
+
+Retrieves completed games for the user "exampleuser".
+
+.NOTES
+Requires that the RetroAchievements credentials are already set in the current session using Set-RACredentialsInMemory.
+#>
+function Get-RACompleted {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory)]
+        [string]$user
+    )
+
+    $creds = Get-RACredentialsFromMemory
+    if ($null -eq $creds) {
+        Write-Host "RetroAchievements credentials not found. Please enter your credentials."
+        Set-RACredentialsInMemory
         $creds = Get-RACredentialsFromMemory
-        if ($null -eq $creds) {
-            Write-Error "Credentials not found in memory. Please run Set-RACredentialsInMemory."
-            return
-        }
-    
-        # API action and URI construction
-        $action = 'API_GetUserCompletedGames.php'
-        $uri = Build-RAUri -Action $action -QueryParameters @{
-            z = $creds['UserName']
-            y = $creds['ApiKey']
-            u = $user
-        }
-    
-        try {
-            # Make the API request
-            $gameFeed = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-            return $gameFeed
-        }
-        catch {
-            Write-Error "Failed to retrieve completed games for user '$user': $_"
-        }
     }
+
+    if ($null -eq $creds) {
+        Write-Error "Credentials not found. Exiting."
+        return
+    }
+
+    $action = 'API_GetUserCompletedGames.php'
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
+        u = $user
+    }
+
+    return $response
+}
     
 <#
 .SYNOPSIS
@@ -362,21 +447,12 @@ function Get-RAUserSummary {
 
     # API action and URI construction
     $action = 'API_GetUserSummary.php'
-    $uri = Build-RAUri -Action $action -QueryParameters @{
-        z = $creds['UserName']
-        y = $creds['ApiKey']
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
         u = $user
         g = $numRecentGames
     }
 
-    try {
-        # Make the API request
-        $userSummary = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-        return $userSummary
-    }
-    catch {
-        Write-Error "Failed to retrieve user summary for '$user': $_"
-    }
+    return $response
 }
 
 <#
@@ -414,20 +490,11 @@ function Get-RAUserRankAndScore {
 
     # API action and URI construction
     $action = 'API_GetUserRankAndScore.php'
-    $uri = Build-RAUri -Action $action -QueryParameters @{
-        z = $creds['UserName']
-        y = $creds['ApiKey']
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
         u = $user
     }
 
-    try {
-        # Make the API request
-        $userRankAndScore = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-        return $userRankAndScore
-    }
-    catch {
-        Write-Error "Failed to retrieve rank and score for user '$user': $_"
-    }
+    return $response
 }
 
 <#
@@ -470,21 +537,12 @@ function Get-RAUserProgress {
 
     # API action and URI construction
     $action = 'API_GetUserProgress.php'
-    $uri = Build-RAUri -Action $action -QueryParameters @{
-        z = $creds['UserName']
-        y = $creds['ApiKey']
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
         u = $user
         i = $gameIDCSV  # Ensure this is treated as a string representing comma-separated values
     }
 
-    try {
-        # Make the API request
-        $userProgress = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-        return $userProgress
-    }
-    catch {
-        Write-Error "Failed to retrieve progress for user '$user' and games '$gameIDCSV': $_"
-    }
+    return $response
 }
 
 <#
@@ -528,21 +586,12 @@ function Get-RARecentGames {
     # API action and URI construction
     $action = 'API_GetUserRecentlyPlayedGames.php'
     # Assuming $count and $offset should be parameters or predefined values. Adding them as optional parameters for this example
-    $uri = Build-RAUri -Action $action -QueryParameters @{
-        z = $creds['UserName']
-        y = $creds['ApiKey']
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
         u = $user
         # Add g and o parameters if they are indeed required and were missing in the original function definition
     }
 
-    try {
-        # Make the API request
-        $userRecent = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-        return $userRecent
-    }
-    catch {
-        Write-Error "Failed to retrieve recently played games for user '$user': $_"
-    }
+    return $response
 }
 
 <#
@@ -591,21 +640,12 @@ function Get-RAGameUser {
 
     # Correctly use the gameID in the query
     $action = 'API_GetGameInfoAndUserProgress.php'
-    $uri = Build-RAUri -Action $action -QueryParameters @{
-        z = $creds['UserName']
-        y = $creds['ApiKey']
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
         u = $user
         g = $gameID  # Corrected to use the variable
     }
 
-    try {
-        # Make the API request
-        $userGameUser = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-        return $userGameUser
-    }
-    catch {
-        Write-Error "Failed to retrieve game information and user progress for user '$user' and game ID '$gameID': $_"
-    }
+    return $response
 }
 
 <#
@@ -655,21 +695,12 @@ function Get-RAEarnedOn {
     $formattedDate = $dateInput.ToString('yyyy-MM-dd')
 
     $action = 'API_GetAchievementsEarnedOnDay.php'
-    $uri = Build-RAUri -Action $action -QueryParameters @{
-        z = $creds['UserName']
-        y = $creds['ApiKey']
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
         u = $user
         d = $formattedDate  # Use the correctly formatted date
     }
 
-    try {
-        # Make the API request
-        $earnedOn = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-        return $earnedOn
-    }
-    catch {
-        Write-Error "Failed to retrieve achievements earned on $formattedDate for user '$user': $_"
-    }
+    return $response
 }
 
 <#
@@ -726,21 +757,11 @@ function Get-RAEarnedBetween {
     $formattedDateTo = $dateTo.ToString('yyyy-MM-dd')
 
     $action = 'API_GetAchievementsEarnedBetween.php'
-    $uri = Build-RAUri -Action $action -QueryParameters @{
-        z = $creds['UserName']
-        y = $creds['ApiKey']
+    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
         u = $user
         f = $formattedDateFrom
         t = $formattedDateTo
     }
 
-    try {
-        # Make the API request
-        $earnedBetween = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-        return $earnedBetween
-    }
-    catch {
-        Write-Error "Failed to retrieve achievements earned between $formattedDateFrom and $formattedDateTo for user '$user': $_"
-    }
+    return $response
 }
-
