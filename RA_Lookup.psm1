@@ -1,19 +1,24 @@
-# RetroAchievementsAPI.psm1
-
-function Set-RACredentialsInMemory {
+function Clear-RACredentialsFromMemory {
     <#
     .SYNOPSIS
-    Prompts the user to enter their RetroAchievements credentials and saves them in memory.
-    
+    Clears RetroAchievements credentials from memory.
+
     .DESCRIPTION
-    This function prompts the user for their RetroAchievements username and API key. 
-    The credentials are saved in the global scope for the current PowerShell session.
-    
+    This function clears the stored RetroAchievements credentials from memory.
+
     .EXAMPLE
-    Set-RACredentialsInMemory
+    Clear-RACredentialsFromMemory
     #>
 
-    $Global:RACredentials = Get-Credential -Message "Enter your RetroAchievements username and the API key for the password."
+    Write-Verbose "Clearing RetroAchievements credentials from memory..."
+    $Global:RACredentials = $null
+
+    # Adding a check to confirm the credentials are cleared
+    if ($null -eq $Global:RACredentials) {
+        Write-Verbose "RetroAchievements credentials cleared successfully."
+    } else {
+        Write-Verbose "Failed to clear RetroAchievements credentials from memory."
+    }
 }
 
 function Get-RACredentialsFromMemory {
@@ -28,6 +33,7 @@ function Get-RACredentialsFromMemory {
     $creds = Get-RACredentialsFromMemory
     #>
 
+    Write-Verbose "Retrieving RetroAchievements credentials from memory..."
     if ($null -eq $Global:RACredentials) {
         Write-Warning "Credentials not found in memory. Please run Set-RACredentialsInMemory."
         return $null
@@ -44,7 +50,38 @@ function Get-RACredentialsFromMemory {
         [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($apiKeyBSTR)
     }
 
-    return @{ UserName = $username; ApiKey = $apiKey }
+    $credentials = @{ UserName = $username; ApiKey = $apiKey }
+    Write-Verbose "RetroAchievements credentials retrieved from memory: $credentials"
+    return $credentials
+}
+
+function Set-RACredentialsInMemory {
+    <#
+    .SYNOPSIS
+    Prompts the user to enter their RetroAchievements credentials and saves them in memory.
+    
+    .DESCRIPTION
+    This function prompts the user for their RetroAchievements username and API key separately.
+    The credentials are saved securely in the global scope for the current PowerShell session.
+    
+    .EXAMPLE
+    Set-RACredentialsInMemory -Verbose
+    #>
+
+    Write-Verbose "Prompting the user to enter RetroAchievements credentials..."
+
+    # Prompt the user for their username
+    $username = Read-Host -Prompt "Enter your RetroAchievements username"
+    # Prompt the user for their API key, securely
+    $apiKey = Read-Host -Prompt "Enter your RetroAchievements API key" -AsSecureString
+
+    # Create a PSCredential object. This is a secure way to store and manage credentials.
+    $creds = [PSCredential]::new($username, $apiKey)
+
+    # Store the credentials in the global scope so they can be accessed from anywhere in the session.
+    $Global:RACredentials = $creds
+
+    Write-Verbose "Credentials stored in memory."
 }
 
 function Invoke-RARestMethod {
@@ -56,88 +93,68 @@ function Invoke-RARestMethod {
         [hashtable]$QueryParameters
     )
 
+    Write-Verbose "Invoking RetroAchievements REST method..."
     $creds = Get-RACredentialsFromMemory
     if ($null -eq $creds) {
         Write-Error "Credentials not found in memory. Please run Set-RACredentialsInMemory."
         return
     }
 
-    # Merge credentials with the caller's query parameters
-    $queryParams = @{
-        z = $creds['UserName']
-        y = $creds['ApiKey']
-    } + $QueryParameters
+    $queryParameters['z'] = $creds.UserName
+    $queryParameters['y'] = $creds.ApiKey
 
-    $uri = Build-RAUri -Action $Action -QueryParameters $queryParams
+    $uri = Build-RAUri -Action $Action -QueryParameters $queryParameters
+    Write-Verbose "URI: $uri"
 
     try {
         $response = Invoke-RestMethod -Uri $uri -Method Get -ErrorAction Stop
-        return $response
+        if ($response) {
+            $response.GetType().FullName
+            $response | Get-Member -MemberType Properties | ForEach-Object {
+                $propName = $_.Name
+                $propValue = $response.$propName
+
+                # Convert property value to string, handling complex objects
+                $propValueString = if ($propValue -is [System.Collections.IEnumerable] -and -not ($propValue -is [string])) {
+                    ($propValue | Out-String).Trim()
+                } else {
+                    $propValue.ToString()
+                }
+
+                # Use concatenation to avoid parser errors in PowerShell 7
+                Write-Host ($propName + ": " + $propValueString)
+            }
+        } else {
+            Write-Host "API call successful but the response is empty."
+        }
     }
     catch {
-        Write-Error "API call to $Action failed: $_"
+        $statusCode = $_.Exception.Response.StatusCode.Value__
+        $statusDescription = $_.Exception.Response.StatusDescription
+        $errorMessage = $_.Exception.Message
+        Write-Error "API call to $Action failed with status code $statusCode ($statusDescription): $errorMessage"
     }
 }
 
-    function Build-RAUri {
-    <#
-    .SYNOPSIS
-    Helper function to build API request URIs.
-    
-    .DESCRIPTION
-    This function constructs a URI for API requests based on the specified action and query parameters.
-    
-    .PARAMETER Action
-    The API action to perform.
-    
-    .PARAMETER QueryParameters
-    A hashtable of query parameters for the request.
-    
-    .EXAMPLE
-    $uri = Build-RAUri -Action 'API_GetTopTenUsers.php' -QueryParameters @{ z = 'UserName'; y = 'APIKey' }
-    
-    #>
-        param (
-            [string]$Action,
-            [hashtable]$QueryParameters
-        )
-    
-        $builder = New-Object System.UriBuilder
-        $builder.Scheme = 'https'
-        $builder.Host = 'retroachievements.org'
-        $builder.Port = 443
-        $builder.Path = "API/$Action"
-    
-        $query = $QueryParameters.GetEnumerator() | ForEach-Object { "$($_.Key)=$($_.Value)" } -join '&'
-        $builder.Query = $query
-    
-        return $builder.Uri.AbsoluteUri
+function Build-RAUri {
+    param (
+        [string]$Action,
+        [hashtable]$QueryParameters
+    )
+
+    $uri = "https://retroachievements.org/API/$Action"
+    $query = ($QueryParameters.GetEnumerator() | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join '&'
+    if ($query) {
+        $uri += "?$query"
     }
-    
-<#
-.SYNOPSIS
-Retrieves a list of console IDs from RetroAchievements.
+    return $uri
+}
 
-.DESCRIPTION
-This function retrieves a list of console IDs from the RetroAchievements API along with their names. Console IDs are useful for identifying consoles in other API calls.
-
-If RetroAchievements credentials are not found in memory, the function prompts the user to enter their credentials using Set-RACredentialsInMemory.
-
-.PARAMETER None
-This function does not accept any parameters.
-
-.EXAMPLE
-Get-RAConID
-
-Retrieves the list of console IDs and their names.
-
-.NOTES
-Requires that the RetroAchievements credentials are already set in the current session using Set-RACredentialsInMemory.
-#>
 function Get-RAConID {
     [CmdletBinding()]
     param ()
 
+    # Retrieve stored credentials
     $creds = Get-RACredentialsFromMemory
     if ($null -eq $creds) {
         Write-Host "RetroAchievements credentials not found. Please enter your credentials."
@@ -150,59 +167,45 @@ function Get-RAConID {
         return
     }
 
-    $action = 'API_GetConsoleIDs.php'
-    $response = Invoke-RARestMethod -Action $action -QueryParameters @{}
+    # Construct the API request URI
+    $uri = "https://retroachievements.org/API/API_GetConsoleIDs.php?z=$($creds.UserName)&y=$($creds.ApiKey)"
 
-    return $response
+    try {
+        # Make the API call and return the results
+        $consoles = Invoke-RestMethod -Uri $uri -Method Get
+        return $consoles
+    }
+    catch {
+        # Handle any errors that occur during the API call
+        Write-Error "Failed to fetch consoles: $_"
+    }
 }
 
-<#
-.SYNOPSIS
-Retrieves a list of games for a specified console from RetroAchievements.
-
-.DESCRIPTION
-This function retrieves a list of games for a specified console from the RetroAchievements API. The console is identified by its console ID.
-
-If RetroAchievements credentials are not found in memory, the function prompts the user to enter their credentials using Set-RACredentialsInMemory.
-
-.PARAMETER consoleID
-The ID of the console for which to retrieve the game list.
-
-.EXAMPLE
-Get-RAGameList -consoleID 5
-
-Retrieves the list of games for the console with ID 5.
-
-.NOTES
-Requires that the RetroAchievements credentials are already set in the current session using Set-RACredentialsInMemory.
-#>
 function Get-RAGameList {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory = $true)]
         [int]$consoleID
     )
 
+    # Assuming this part retrieves credentials correctly
     $creds = Get-RACredentialsFromMemory
-    if ($null -eq $creds) {
-        Write-Host "RetroAchievements credentials not found. Please enter your credentials."
-        Set-RACredentialsInMemory
-        $creds = Get-RACredentialsFromMemory
-    }
-
     if ($null -eq $creds) {
         Write-Error "Credentials not found. Exiting."
         return
     }
 
-    $action = 'API_GetGameList.php'
-    $response = Invoke-RARestMethod -Action $action -QueryParameters @{
-        i = $consoleID
-    }
+    $uri = "https://retroachievements.org/API/API_GetGameList.php?z=$($creds.UserName)&y=$($creds.ApiKey)&i=$consoleID"
 
-    return $response
+    try {
+        # Directly return the parsed JSON objects
+        return Invoke-RestMethod -Uri $uri
+    }
+    catch {
+        Write-Error "Failed to fetch game list: $_"
+    }
 }
-    
+
 <#
 .SYNOPSIS
 Retrieves information for a specified game from RetroAchievements.
@@ -815,6 +818,54 @@ function Get-RAAchievementUnlocks {
         u = $user
         g = $gameID
     }
+
+    return $response
+}
+
+<#
+.SYNOPSIS
+Retrieves the profile information of a user from RetroAchievements.
+
+.DESCRIPTION
+This function retrieves the profile information of a user from RetroAchievements API based on the specified user ID. If RetroAchievements credentials are not found in memory, it prompts the user to enter their credentials using Set-RACredentialsInMemory.
+
+.PARAMETER UserId
+The ID of the user whose profile information is to be retrieved.
+
+.EXAMPLE
+Get-RAUserProfile -UserId '12345'
+
+Retrieves the profile information of the user with the ID '12345' from RetroAchievements.
+
+.NOTES
+For more information about the RetroAchievements API, visit: https://api-docs.retroachievements.org/v1/get-user-profile.html
+#>
+function Get-RAUserProfile {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true)]
+        [string]$UserId
+    )
+
+    # Check if credentials are present, if not, request them
+    $creds = Get-RACredentialsFromMemory
+    if ($null -eq $creds) {
+        Write-Host "RetroAchievements credentials not found. Please enter your credentials."
+        Set-RACredentialsInMemory
+        $creds = Get-RACredentialsFromMemory
+        if ($null -eq $creds) {
+            Write-Error "Unable to retrieve credentials. Operation cancelled."
+            return
+        }
+    }
+
+    $action = 'API_GetUserProfile.php'
+    $queryParameters = @{
+        'z' = 'UserID'
+        'y' = $UserId
+    }
+
+    $response = Invoke-RARestMethod -Action $action -QueryParameters $queryParameters
 
     return $response
 }
