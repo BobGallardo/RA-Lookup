@@ -9,10 +9,10 @@
 @{
 
   # Script module or binary module file associated with this manifest.
-  RootModule        = 'RA_Lookup'
+  RootModule        = 'RA_Lookup.psm1'
   
   # Version number of this module.
-  ModuleVersion     = '0.5.2'
+  ModuleVersion     = '0.6.0'
   
   # Supported PSEditions
   # CompatiblePSEditions = @()
@@ -24,7 +24,7 @@
   Author            = 'bobbyG'
   
   # Company or vendor of this module
-  CompanyName       = 'none'
+  # CompanyName       = ''
   
   # Copyright statement for this module
   Copyright         = '(c) bobbyG. All rights reserved.'
@@ -33,7 +33,7 @@
   Description       = 'A Powershell module that will communicate with the RetroAchievements API and allow you to capture public user profile data.'
   
   # Minimum version of the PowerShell engine required by this module
-  # PowerShellVersion = ''
+  PowerShellVersion = '7.0'
   
   # Name of the PowerShell host required by this module
   # PowerShellHostName = ''
@@ -57,7 +57,7 @@
   # RequiredAssemblies = @()
   
   # Script files (.ps1) that are run in the caller's environment prior to importing this module.
-  ScriptsToProcess  = @('RA_GetCreds.ps1')
+  # ScriptsToProcess  = @()
   
   # Type files (.ps1xml) to be loaded when importing this module
   # TypesToProcess = @()
@@ -69,7 +69,20 @@
   NestedModules     = @('.\RA_Lookup.psm1')
   
   # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-  FunctionsToExport = @('Get-RATop10', 'Get-RAConID', 'Get-RAGameList', 'Get-RAGameNfo', 'Get-RAGameExt', 'Get-RAFeed', 'Get-RAUserSummary', 'Get-RAUserRankAndScore', 'Get-RAUserProgress', 'Get-RARecentGames', 'Get-RAGameUser', 'Get-RAEarnedOn', 'Get-RAEarnedBetween')
+  FunctionsToExport = @(
+    'Set-RACredentialsInMemory', 
+    'Clear-RACredentialsFromMemory', 
+    'Get-RACredentialsFromMemory', 
+    'Invoke-RARestMethod', 
+    'Get-RAUserProfile', 
+    'Get-RARecentUserAchievements', 
+    'Get-RAEarnedBetween', 
+    'Get-RACompleted',
+    'Get-RAGameNfo',
+    'Get-RAGameExt',
+    'Get-RAConID',
+    'Get-RAGameList'
+   )
   
   # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
   CmdletsToExport   = @()
