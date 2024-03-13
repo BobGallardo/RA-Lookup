@@ -1,4 +1,4 @@
-# RA-Lookup
+# RetroAchievements api-powershell
 This Powershell module that will communicate with the RetroAchievements API (https://retroachievements.org/APIDemo.php) and allow you to capture public user profile data.<br>
 <br>
 <h2>Requirements:</h2>
