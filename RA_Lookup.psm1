@@ -513,19 +513,19 @@ function Get-RAEarnedBetween {
 #     return $response
 # }
 
-# function Get-RAGameInfoAndUserProgress { }
+# function Get-RAGameInfoAndUserProgress { # https://api-docs.retroachievements.org/v1/get-game-info-and-user-progress.html}
 
-# function Get-RAUserCompletionProgress { }
+# function Get-RAUserCompletionProgress { # https://api-docs.retroachievements.org/v1/get-user-completion-progress.html}
 
-# function Get-RAUserCompletionProgress { }
+# function Get-RAUserCompletionProgress { # https://api-docs.retroachievements.org/v1/get-user-completion-progress.html}
 
-# function Get-RAUserAwards { }
+# function Get-RAUserAwards { # https://api-docs.retroachievements.org/v1/get-user-awards.html}
 
-# function Get-RAGetUserClaims { }
+# function Get-RAGetUserClaims { # https://api-docs.retroachievements.org/v1/get-user-claims.html}
 
-# function Get-RAUserGameRankAndScore { }
+# function Get-RAUserGameRankAndScore { # https://api-docs.retroachievements.org/v1/get-user-game-rank-and-score.html}
 
-# function Get-RAGetUserPoints { }
+# function Get-RAGetUserPoints { # https://api-docs.retroachievements.org/v1/get-user-points.html}
 
 # <#
 # .SYNOPSIS
@@ -851,9 +851,9 @@ function Get-RAGameExt {
     }
 }
 
-# function Get-RAAchievementCount { }
+# function Get-RAAchievementCount { # https://api-docs.retroachievements.org/v1/get-achievement-count.html}
 
-# function Get-RAAchievementDistribution { }
+# function Get-RAAchievementDistribution { # https://api-docs.retroachievements.org/v1/get-achievement-distribution.html}
 
 # <#
 # .SYNOPSIS
@@ -1087,14 +1087,31 @@ function Get-RAGameList {
 ## FEED FUNCTIONS##
 ###################
 
-# function Get-RAActiveClaims { }
+# function Get-RAActiveClaims { # https://api-docs.retroachievements.org/v1/get-active-claims.html}
 
-# function Get-RAClaims { }
+# function Get-RAInactiveClaims { # https://api-docs.retroachievements.org/v1/get-claims.html}
 
-# function Get-RATopTenUsers { }
+# function Get-RATopTenUsers { # https://api-docs.retroachievements.org/v1/get-top-ten-users.html}
 
 #####################
 ## EVENT FUNCTIONS ##
 #####################
 
-# function Get-RAAchievementOfTheWeek { }
+# function Get-RAAchievementOfTheWeek { # https://api-docs.retroachievements.org/v1/get-achievement-of-the-week.html}
+
+
+######################
+## TICKET FUNCTIONS ##
+######################
+
+# function Get-RATicketData { # https://api-docs.retroachievements.org/v1/get-ticket-data/get-ticket-by-id.html}
+
+# function Get-RAMostTicketedGames { # https://api-docs.retroachievements.org/v1/get-ticket-data/get-most-ticketed-games.html}
+
+# function Get-RAMostRecentTickets { # https://api-docs.retroachievements.org/v1/get-ticket-data/get-most-recent-tickets.html}
+
+# function Get-RAGameTicketStats { # https://api-docs.retroachievements.org/v1/get-ticket-data/get-game-ticket-stats.html}
+
+# function Get-RADeveloperTicketStats { # https://api-docs.retroachievements.org/v1/get-ticket-data/get-developer-ticket-stats.html}
+
+# function Get-RAAchievementTicketStats { # https://api-docs.retroachievements.org/v1/get-ticket-data/get-achievement-ticket-stats.html}
