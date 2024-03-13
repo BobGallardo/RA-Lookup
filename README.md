@@ -1,16 +1,16 @@
-# RetroAchievements api-powershell
-This Powershell module that will communicate with the RetroAchievements API (https://retroachievements.org/APIDemo.php) and allow you to capture public user profile data.<br>
-<br>
-<h2>Requirements:</h2>
-Enter your RetroAchievements username and API key when you import the module. You can run RA_GetCreds.ps1 in the module directory if you need to manually add your API key.
-<br><br><h2>In Progress:</h2> 
-<li>An update to a couple of the functions that will pass additional variables to the API call.</li> 
-<li>Complete help documentation for all functions.</li> 
-<br><h2>Troubleshooting:</h2>
-You may need to unblock the .ps1 and .psm1 files 
-<br><code>
-Unblock-File RA_GetCreds.ps1
-</code>
-<br><code>
+# RetroAchievements API-PowerShell
+This Powershell module that will communicate with the [RetroAchievements API](https://retroachievements.org/APIDemo.php) and allow you to capture public user profile data.
+ <br /><br />
+## Requirements:
+Every function will check for credentials and will prompt you for `user name` and `API key` if no credentials are found. Use the [RetroAchievements Control Panel](https://retroachievements.org/controlpanel.php) to find your Web API Key.
+ <br /><br />
+## In Progress: 
+- Add missing functions (API Endpoints). 
+- Complete help documentation for all functions. 
+ <br /><br />
+## Troubleshooting:
+You may need to unblock the .psm1 files 
+
+```
 Unblock-File RA_Lookup.psm1
-</code>
+```
